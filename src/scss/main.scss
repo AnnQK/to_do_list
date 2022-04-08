@@ -47,3 +47,37 @@ body {
     }
   }
 }
+
+.tasks-list {
+  padding-top: 1rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  &__item {
+    margin-right: auto;
+    padding-left: 0.5rem;
+  }
+
+  &__div {
+    display: flex;
+    align-items: center;
+
+    .done-btn,
+    .delete-btn {
+      font-size: 1.5rem;
+      padding: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .done-btn {
+      background-color: $doneBtnColor;
+    }
+    .delete-btn {
+      background-color: $deleteBtnColor;
+    }
+  }
+}
