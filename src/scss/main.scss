@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Tamil:wght@300&display=swap');
+@import 'variables', 'resets';
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  font-family: 'Anek Tamil', sans-serif;
+  font-size: 18px;
+}
+
+.title {
+  padding: 1rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: $inputColor;
+  border-radius: 1rem;
+
+  &__input {
+    border: none;
+    padding: 1rem;
+    background-color: transparent;
+
+    &:focus {
+      outline: $hoverColor;
+    }
+  }
+
+  &__btn {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px $hoverColor solid;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 300ms;
+
+    &:hover {
+      background-color: $hoverColor;
+    }
+  }
+}
