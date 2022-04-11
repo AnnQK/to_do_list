@@ -64,6 +64,7 @@ body {
   &__div {
     display: flex;
     align-items: center;
+    transition: 700ms;
 
     .done-btn,
     .delete-btn {
@@ -80,4 +81,12 @@ body {
       background-color: $deleteBtnColor;
     }
   }
+}
+
+.removing {
+  transform: scale(0.1);
+  opacity: 0.1;
+}
+.completing {
+  opacity: 0.1;
 }

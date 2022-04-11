@@ -3,7 +3,7 @@ const btnInput = document.querySelector('.js-input-btn');
 const tasksList = document.querySelector('.js-tasks-container');
 
 // adding task to task list
-function updateUI() {
+function addTask() {
   // creating a bow for task
   const listDiv = document.createElement('div');
   listDiv.classList.add('tasks-list__div');
@@ -30,7 +30,7 @@ function updateUI() {
 
   //   adding text and buttons
 
-  tasksList.appendChild(listDiv);
+  tasksList.insertAdjacentElement('afterbegin', listDiv);
   taskInput.value = '';
 }
 
@@ -41,7 +41,22 @@ function inputValidation() {
   return true;
 }
 
+function deleteTask(e) {
+  const targetItem = e.target;
+  if (!targetItem.classList.contains('delete-btn')) return;
+
+  // find div with rask
+  const targetParent = targetItem.parentElement;
+
+  // remove div with task
+  targetParent.classList.add('removing');
+  targetParent.addEventListener('transitionend', () => {
+    targetParent.remove();
+  });
+}
+
 btnInput.addEventListener('click', function (e) {
   e.preventDefault();
-  if (inputValidation()) return updateUI();
+  if (inputValidation()) return addTask();
 });
+tasksList.addEventListener('click', deleteTask);
