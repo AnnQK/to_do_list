@@ -1,10 +1,11 @@
+// varianles
 const taskInput = document.querySelector('.js-input');
 const btnInput = document.querySelector('.js-input-btn');
 const tasksList = document.querySelector('.js-tasks-container');
 
 // adding task to task list
 function addTask() {
-  // creating a bow for task
+  // creating a box for task
   const listDiv = document.createElement('div');
   listDiv.classList.add('tasks-list__div');
 
@@ -29,7 +30,6 @@ function addTask() {
   listDiv.appendChild(deleteBtn);
 
   //   adding text and buttons
-
   tasksList.insertAdjacentElement('afterbegin', listDiv);
   taskInput.value = '';
 }
@@ -41,6 +41,7 @@ function inputValidation() {
   return true;
 }
 
+// delete task
 function removeTask(e) {
   const targetItem = e.target;
   // check if target is functional btn
@@ -64,6 +65,7 @@ function removeTask(e) {
   });
 }
 
+// handlers
 btnInput.addEventListener('click', function (e) {
   e.preventDefault();
   if (inputValidation()) return addTask();
