@@ -41,15 +41,24 @@ function inputValidation() {
   return true;
 }
 
-function deleteTask(e) {
+function removeTask(e) {
   const targetItem = e.target;
-  if (!targetItem.classList.contains('delete-btn')) return;
+  // check if target is functional btn
+  if (
+    !targetItem.classList.contains('delete-btn') &&
+    !targetItem.classList.contains('done-btn')
+  )
+    return;
 
-  // find div with rask
+  // find div with task
   const targetParent = targetItem.parentElement;
 
-  // remove div with task
-  targetParent.classList.add('removing');
+  if (targetItem.classList.contains('delete-btn')) {
+    targetParent.classList.add('removing');
+  } else {
+    targetParent.classList.add('completing');
+  }
+  // remove div
   targetParent.addEventListener('transitionend', () => {
     targetParent.remove();
   });
@@ -59,4 +68,4 @@ btnInput.addEventListener('click', function (e) {
   e.preventDefault();
   if (inputValidation()) return addTask();
 });
-tasksList.addEventListener('click', deleteTask);
+tasksList.addEventListener('click', removeTask);

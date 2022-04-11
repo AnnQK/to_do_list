@@ -84,9 +84,12 @@ body {
 }
 
 .removing {
-  transform: scale(0.1);
+  background-color: $deleteBtnColor;
+  transform: translateX(10rem);
   opacity: 0.1;
 }
 .completing {
+  background-color: $doneBtnColor;
+  transform: translateX(-10rem);
   opacity: 0.1;
 }
