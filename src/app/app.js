@@ -5,6 +5,9 @@ const tasksList = document.querySelector('.js-tasks-container');
 
 // adding task to task list
 function addTask() {
+  // saving task in local storage
+  addToStorage(taskInput.value);
+
   // creating a box for task
   const listDiv = document.createElement('div');
   listDiv.classList.add('tasks-list__div');
@@ -55,6 +58,10 @@ function removeTask(e) {
   const targetParent = targetItem.parentElement;
 
   if (targetItem.classList.contains('delete-btn')) {
+    // remove from local storage
+    removeFromStorage(targetParent);
+
+    // remove item
     targetParent.classList.add('removing');
   } else {
     targetParent.classList.add('completing');
@@ -63,6 +70,32 @@ function removeTask(e) {
   targetParent.addEventListener('transitionend', () => {
     targetParent.remove();
   });
+}
+
+// checking and getting todos from local storage
+function getTodos() {
+  let todos;
+  if (localStorage.getItem('todos') === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem('todos'));
+  }
+  return todos;
+}
+
+// adding task to local storage
+function addToStorage(task) {
+  let savedTasks = getTodos();
+  savedTasks.push(task);
+  localStorage.setItem('todos', JSON.stringify(savedTasks));
+}
+
+// removing from local storage
+function removeFromStorage(task) {
+  let savedTasks = getTodos();
+  const taskIndex = savedTasks.indexOf(task.firstChild.innerText);
+  savedTasks.splice(taskIndex, 1);
+  localStorage.setItem('todos', JSON.stringify(savedTasks));
 }
 
 // handlers
