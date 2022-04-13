@@ -2,39 +2,15 @@
 const taskInput = document.querySelector('.js-input');
 const btnInput = document.querySelector('.js-input-btn');
 const tasksList = document.querySelector('.js-tasks-container');
+const btnShowTasks = document.querySelector('.js-show-btn');
 
 // adding task to task list
 function addTask() {
   // saving task in local storage
   addToStorage(taskInput.value);
 
-  // creating a box for task
-  const listDiv = document.createElement('div');
-  listDiv.classList.add('tasks-list__div');
-
-  //   creating list item with task text
-  const listItem = document.createElement('li');
-  listItem.classList.add('tasks-list__item');
-  listItem.innerText = taskInput.value;
-  listDiv.appendChild(listItem);
-
-  //   creating buttons for each task
-
-  //   task done
-  const doneBtn = document.createElement('button');
-  doneBtn.classList.add('done-btn');
-  doneBtn.innerHTML = `&#x2611`;
-  listDiv.appendChild(doneBtn);
-
-  //   delete task
-  const deleteBtn = document.createElement('button');
-  deleteBtn.classList.add('delete-btn');
-  deleteBtn.innerHTML = '&#x2612';
-  listDiv.appendChild(deleteBtn);
-
-  //   adding text and buttons
-  tasksList.insertAdjacentElement('afterbegin', listDiv);
-  taskInput.value = '';
+  // add task ui
+  updateUI(taskInput.value);
 }
 
 function inputValidation() {
@@ -47,6 +23,7 @@ function inputValidation() {
 // delete task
 function removeTask(e) {
   const targetItem = e.target;
+
   // check if target is functional btn
   if (
     !targetItem.classList.contains('delete-btn') &&
@@ -98,9 +75,48 @@ function removeFromStorage(task) {
   localStorage.setItem('todos', JSON.stringify(savedTasks));
 }
 
+function updateUI(taskText) {
+  // creating a box for task
+  const listDiv = document.createElement('div');
+  listDiv.classList.add('tasks-list__div');
+
+  //   creating list item with task text
+  const listItem = document.createElement('li');
+  listItem.classList.add('tasks-list__item');
+  listItem.innerText = taskText;
+  listDiv.appendChild(listItem);
+
+  //   creating buttons for each task
+
+  //   task done
+  const doneBtn = document.createElement('button');
+  doneBtn.classList.add('done-btn');
+  doneBtn.innerHTML = `&#x2611`;
+  listDiv.appendChild(doneBtn);
+
+  //   delete task
+  const deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('delete-btn');
+  deleteBtn.innerHTML = '&#x2612';
+  listDiv.appendChild(deleteBtn);
+
+  //   adding text and buttons
+  tasksList.insertAdjacentElement('afterbegin', listDiv);
+  taskInput.value = '';
+}
+
+function showTasks() {
+  let savedTasks = getTodos();
+  savedTasks.forEach((item) => updateUI(item));
+}
+
 // handlers
+
 btnInput.addEventListener('click', function (e) {
   e.preventDefault();
   if (inputValidation()) return addTask();
 });
+
 tasksList.addEventListener('click', removeTask);
+
+btnShowTasks.addEventListener('click', showTasks);

@@ -17,6 +17,11 @@ body {
   text-align: center;
 }
 
+.main-ui {
+  display: flex;
+  gap: 1rem;
+}
+
 .form {
   display: flex;
   align-items: center;
@@ -80,6 +85,19 @@ body {
     .delete-btn {
       background-color: $deleteBtnColor;
     }
+  }
+}
+
+.show-tasks-btn {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px $hoverColor solid;
+  background-color: $inputColor;
+  cursor: pointer;
+  transition: 300ms;
+
+  &:hover {
+    background-color: $hoverColor;
   }
 }
 
