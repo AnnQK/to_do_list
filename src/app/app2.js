@@ -6,33 +6,39 @@ const btnShowTasks = document.querySelector('.js-show-btn');
 const filterOptions = document.querySelector('.js-select');
 
 class Task {
-  constructor(title, category, time, complete) {
+  constructor(title, category, time) {
     this.title = title;
     this.category = category;
     this.time = time;
-    this.complete = complete;
   }
 }
 
 class UI {
   addTask(task) {
+    // creating a box for task
+
     //   creating list item with task text
     const listItem = document.createElement('li');
     listItem.classList.add('tasks-list__item');
+
     const taskName = document.createElement('span');
     taskName.innerText = task.title;
     listItem.appendChild(taskName);
+
     //   creating buttons for each task
+
     //   task done
     const doneBtn = document.createElement('button');
     doneBtn.classList.add('done-btn');
     doneBtn.innerHTML = `&#x2611`;
     listItem.appendChild(doneBtn);
+
     //   delete task
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.innerHTML = '&#x2612';
     listItem.appendChild(deleteBtn);
+
     //   adding text and buttons
     tasksList.insertAdjacentElement('afterbegin', listItem);
     taskInput.value = '';
@@ -40,23 +46,25 @@ class UI {
 
   removeTask(e) {
     const targetItem = e.target;
+
     // check if target is functional btn
     if (
       !targetItem.classList.contains('delete-btn') &&
       !targetItem.classList.contains('done-btn')
     )
       return;
+
     // find div with task
     const targetParent = targetItem.parentElement;
+
     if (targetItem.classList.contains('delete-btn')) {
       // remove from local storage
-      Storage.removeFromStorage(targetParent);
+      removeFromStorage(targetParent);
+
       // remove item
       targetParent.classList.add('removed-task');
     } else {
       targetParent.classList.add('done-task');
-      // change status
-      Storage.updateStatus(targetParent);
     }
     // remove div
     targetParent.addEventListener('transitionend', () => {
@@ -66,7 +74,7 @@ class UI {
 }
 
 class Storage {
-  static getTasks() {
+  getTasks() {
     let tasks;
     if (localStorage.getItem('tasks') === null) {
       tasks = [];
@@ -76,68 +84,43 @@ class Storage {
     return tasks;
   }
 
-  static findInStorage(task) {
-    const savedTasks = Storage.getTasks();
-    const taskInfo = task.firstChild.innerText;
-    const taskIndex = savedTasks.findIndex((item) => item.title === taskInfo);
-    return taskIndex;
-  }
-
-  static addToStorage(task) {
-    const savedTasks = Storage.getTasks();
+  addToStorage(task) {
+    const savedTasks = getTasks();
     savedTasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(savedTasks));
   }
 
-  static removeFromStorage(task) {
-    const savedTasks = Storage.getTasks();
-    const taskIndex = Storage.findInStorage(task);
+  removeFromStorage(task) {
+    const savedTasks = this.getTasks();
+    const taskIndex = savedTasks.indexOf(task.firstChild.innerText);
     savedTasks.splice(taskIndex, 1);
     localStorage.setItem('tasks', JSON.stringify(savedTasks));
   }
 
-  static showTasks() {
-    let savedTasks = Storage.getTasks();
+  showTasks() {
+    let savedTasks = this.getTasks();
+
     savedTasks.forEach((task) => {
       const ui = new UI();
       ui.addTask(task);
     });
   }
-
-  static updateStatus(task) {
-    const updatedTask = Storage.getTasks()[Storage.findInStorage(task)];
-    updatedTask.complete = 'true';
-    Storage.removeFromStorage(task);
-    Storage.addToStorage(updatedTask);
-  }
-
-  static filterTasks() {
-    const savedTasks = this.getTasks();
-    const doneTasks = savedTasks.filter((item) => item.complete);
-    return doneTasks;
-  }
 }
-
-document.addEventListener('DOMContentLoaded', Storage.showTasks());
 
 btnInput.addEventListener('click', function (e) {
   e.preventDefault();
-  if (taskInput.value === '') {
-    return false;
-  }
+
   const title = taskInput.value;
-  const category = 'none';
-  const time = 'none';
-  const complete = false;
-  const userTask = new Task(title, category, time, complete);
+  const category = taskInput.value;
+  const time = taskInput.value;
+
+  const userTask = new Task(title, category, time);
   const ui = new UI();
   ui.addTask(userTask);
 
-  Storage.addToStorage(userTask);
+  Storage.addTask(userTask);
 });
 
-tasksList.addEventListener('click', function (e) {
-  e.preventDefault();
-  const ui = new UI();
-  ui.removeTask(e);
-});
+// tasksList.addEventListener('click', removeTask);
+
+// btnShowTasks.addEventListener('click', showTasks);

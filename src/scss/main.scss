@@ -62,14 +62,10 @@ body {
   gap: 0.5rem;
 
   &__item {
-    margin-right: auto;
-    padding-left: 0.5rem;
-  }
-
-  &__div {
     display: flex;
     align-items: center;
     transition: 700ms;
+    padding-left: 0.5rem;
 
     .done-btn,
     .delete-btn {
@@ -81,7 +77,9 @@ body {
 
     .done-btn {
       background-color: $doneBtnColor;
+      margin-left: auto;
     }
+
     .delete-btn {
       background-color: $deleteBtnColor;
     }
@@ -101,13 +99,13 @@ body {
   }
 }
 
-.removing {
+.removed-task {
   background-color: $deleteBtnColor;
-  transform: translateX(10rem);
+  transform: translateY(10rem);
   opacity: 0.1;
 }
-.completing {
+.done-task {
   background-color: $doneBtnColor;
-  transform: translateX(-10rem);
+  transform: translateY(10rem);
   opacity: 0.1;
 }
