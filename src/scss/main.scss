@@ -3,11 +3,11 @@
 
 body {
   display: flex;
+  gap: 10rem;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 100vh;
-  font-family: 'Anek Tamil', sans-serif;
+  min-height: 100vh;
+  font-family: 'Anek Tamil', monospace;
   font-size: 18px;
 }
 
@@ -15,6 +15,10 @@ body {
   padding: 1rem;
   font-size: 3rem;
   text-align: center;
+}
+
+main {
+  flex-grow: 1;
 }
 
 .main-ui {
@@ -36,6 +40,16 @@ body {
 
     &:focus {
       outline: $hoverColor;
+    }
+  }
+
+  &__select {
+    border: none;
+    padding: 1rem;
+    background-color: transparent;
+
+    option {
+      background-color: $inputColor;
     }
   }
 
@@ -104,6 +118,7 @@ body {
   transform: translateY(10rem);
   opacity: 0.1;
 }
+
 .done-task {
   background-color: $doneBtnColor;
   transform: translateY(10rem);

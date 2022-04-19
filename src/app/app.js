@@ -1,9 +1,9 @@
-// variables
+// VARIABLES
 const taskInput = document.querySelector('.js-input');
 const btnInput = document.querySelector('.js-input-btn');
 const tasksList = document.querySelector('.js-tasks-container');
-const btnShowTasks = document.querySelector('.js-show-btn');
 const filterOptions = document.querySelector('.js-select');
+// const btnShowTasks = document.querySelector('.js-show-btn');
 
 class Task {
   constructor(title, category, time, complete) {
@@ -63,6 +63,10 @@ class UI {
       targetParent.remove();
     });
   }
+
+  clearTasksList() {
+    tasksList.innerHTML = '';
+  }
 }
 
 class Storage {
@@ -118,8 +122,8 @@ class Storage {
   }
 }
 
+// HANDLERS
 document.addEventListener('DOMContentLoaded', Storage.showTasks());
-
 btnInput.addEventListener('click', function (e) {
   e.preventDefault();
   if (taskInput.value === '') {
@@ -132,12 +136,28 @@ btnInput.addEventListener('click', function (e) {
   const userTask = new Task(title, category, time, complete);
   const ui = new UI();
   ui.addTask(userTask);
-
   Storage.addToStorage(userTask);
 });
-
 tasksList.addEventListener('click', function (e) {
   e.preventDefault();
   const ui = new UI();
   ui.removeTask(e);
+});
+filterOptions.addEventListener('click', function (e) {
+  const ui = new UI();
+  ui.clearTasksList();
+  switch (e.target.value) {
+    case 'done': {
+      const tasks = Storage.filterTasks();
+      tasks.forEach((item) => ui.addTask(item));
+      break;
+    }
+    case 'saved': {
+      Storage.showTasks();
+      break;
+    }
+    case 'empty': {
+      Storage.showTasks();
+    }
+  }
 });
