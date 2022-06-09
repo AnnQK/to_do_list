@@ -1,4 +1,4 @@
-# To Dd list
+# To Do list
 ## [Link](https://annqk.github.io/to_do_list/)
 ## Tech
 - JS 
